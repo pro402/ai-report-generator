@@ -1,4 +1,4 @@
-Below is a more elaborate and refined README.md file inspired by high-quality GitHub projects. I browsed several exemplary repositories to capture a polished tone, comprehensive sections, and well-organized content. Here’s the updated version:
+Below is the updated README.md with an enhanced Demo section and added instructions for converting the generated markdown report to PDF using pandoc:
 
 ---
 
@@ -13,11 +13,13 @@ AI Report Generator is a robust tool that leverages state-of-the-art language mo
 ## Table of Contents
 
 - [Overview](#overview)
+- [Demo](#demo)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
 - [Project Structure](#project-structure)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Converting Markdown to PDF](#converting-markdown-to-pdf)
 - [Customization](#customization)
 - [Roadmap](#roadmap)
 - [Contributing](#contributing)
@@ -29,9 +31,33 @@ AI Report Generator is a robust tool that leverages state-of-the-art language mo
 The AI Report Generator is designed to streamline the creation of comprehensive content by:
 - Generating well-organized outlines based on user-provided topics and instructions.
 - Performing deep research using integrated AI search tools for general, finance, and news queries.
-- Compiling and formatting final reports in markdown format suitable for conversion to PDF using pandoc.
+- Compiling and formatting final reports in markdown format, which can be easily converted to PDF using pandoc and related tools.
 
 This project is ideal for content creators, researchers, and anyone looking to automate the production of detailed written materials.
+
+## Demo
+
+### Interactive Demo Video
+Watch our local demo video to see the AI Report Generator in action. This demo showcases:
+- **User Interface Walkthrough:** An overview of the Streamlit-based UI where you input parameters.
+- **Workflow Visualization:** How the state graph transitions from research to content generation.
+- **Report Generation:** The process of generating, previewing, and downloading a report.
+
+Click the video below to view it (ensure the video file is in the designated `demos` folder):
+
+<video width="800" controls>
+  <source src="demos/ai-report-generator-demo(1).mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+### Additional Demo Assets
+- **Graph Workflow Diagram:**  
+  ![Graph Workflow](demos/graph.png)  
+  _This diagram illustrates the state transitions from initial research through final report generation._
+
+- **Sample Generated Reports:**  
+  - [View Sample Report (Markdown)](demos/demo_report_1.md)
+  - [View Sample Report (Markdown)](demos/demo_report_2.md)
 
 ## Features
 
@@ -54,7 +80,7 @@ This project is ideal for content creators, researchers, and anyone looking to a
 
 - **Language Models & AI Tools:**
   - [LangChain](https://github.com/hwchase17/langchain)
-  - [ChatNVIDIA Deepseek Model](https://developer.nvidia.com/)
+  - [ChatNVIDIA Deepseek Model](https://build.nvidia.com/deepseek-ai/deepseek-r1)
 
 - **Workflow Management:**
   - [LangGraph](https://github.com/langgraph/langgraph)
@@ -64,27 +90,27 @@ This project is ideal for content creators, researchers, and anyone looking to a
   - [Streamlit](https://streamlit.io/) for the web interface
 
 - **Python Ecosystem:**
-  - Standard libraries and environment management using [dotenv](https://github.com/theskumar/python-dotenv)
+  - Environment management with [dotenv](https://github.com/theskumar/python-dotenv)
 
 ## Project Structure
 
 - **workflow.py:**  
-  Orchestrates the research and report generation processes using a state graph to define transitions and interactions.  
+  Orchestrates the research and report generation processes using a state graph to define transitions and interactions.
 
 - **tools.py:**  
-  Contains custom tool functions for executing general, finance, and news searches via the Tavily API.  
+  Contains custom tool functions for executing general, finance, and news searches via the Tavily API.
 
 - **report_generator.py:**  
-  Implements AI-driven content generation, from creating detailed outlines to final report assembly, using ChatNVIDIA and LangChain.  
+  Implements AI-driven content generation, from creating detailed outlines to final report assembly, using ChatNVIDIA and LangChain.
 
 - **models.py:**  
-  Defines the data models (using TypedDicts) for managing Report and Research states throughout the workflow.  
+  Defines the data models (using TypedDicts) for managing Report and Research states throughout the workflow.
 
 - **streamlit_app.py:**  
-  Provides a sleek Streamlit interface for users to input parameters, trigger the report generation workflow, and download the final content.  
+  Provides a sleek Streamlit interface for users to input parameters, trigger the report generation workflow, and download the final content.
 
 - **requirements.txt:**  
-  Lists all necessary dependencies to run the project.  
+  Lists all necessary dependencies to run the project.
 
 - **.gitignore & .env_example:**  
   Standard configuration files to manage environment variables and ignore unnecessary files in version control.
@@ -152,6 +178,25 @@ streamlit run streamlit_app.py
 3. **Download Report:**  
    View the generated structure and report on-screen and download the final markdown file using the provided download button.
 
+## Converting Markdown to PDF
+
+To convert your generated markdown report to PDF, follow these steps (Ubuntu/Debian):
+
+1. **Install Pandoc and TeX Live packages:**
+
+   ```bash
+   sudo apt-get install -y pandoc
+   sudo apt-get install -y texlive-xetex texlive-fonts-recommended texlive-plain-generic
+   ```
+
+2. **Convert the Markdown file to PDF:**
+
+   ```bash
+   pandoc report.md -o report.pdf
+   ```
+
+This command converts `report.md` to `report.pdf` using Pandoc. Adjust the filenames as needed.
+
 ## Customization
 
 - **Workflow Extensions:**  
@@ -187,8 +232,6 @@ Contributions are highly appreciated! To contribute:
 3. Commit your changes with clear commit messages.
 4. Open a pull request for review.
 
-Please refer to our [CONTRIBUTING.md](CONTRIBUTING.md) (if available) for detailed guidelines.
-
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for complete details.
@@ -203,7 +246,3 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
   For their APIs that power advanced search and content generation capabilities.
 - **Community Contributions:**  
   Thanks to all open source contributors who make projects like this possible.
-
----
-
-This refined README.md reflects a comprehensive and professional structure, inspired by some of the best practices seen in other high-quality GitHub repositories.
