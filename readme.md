@@ -1,7 +1,3 @@
-Below is the updated README.md with an enhanced Demo section and added instructions for converting the generated markdown report to PDF using pandoc:
-
----
-
 # AI Report Generator
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -43,12 +39,8 @@ Watch our local demo video to see the AI Report Generator in action. This demo s
 - **Workflow Visualization:** How the state graph transitions from research to content generation.
 - **Report Generation:** The process of generating, previewing, and downloading a report.
 
-Click the video below to view it (ensure the video file is in the designated `demos` folder):
-
-<video width="800" controls>
-  <source src="demos/ai-report-generator-demo(1).mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+Click the video below to view it:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/HFsXR69v3nE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ### Additional Demo Assets
 - **Graph Workflow Diagram:**  
@@ -56,8 +48,8 @@ Click the video below to view it (ensure the video file is in the designated `de
   _This diagram illustrates the state transitions from initial research through final report generation._
 
 - **Sample Generated Reports:**  
-  - [View Sample Report (Markdown)](demos/demo_report_1.md)
-  - [View Sample Report (Markdown)](demos/demo_report_2.md)
+  - [View Sample Report (Markdown)](demos/report(2).md)
+  - [View Sample Report (Markdown)](demos/responsibleAI.md)
 
 ## Features
 
