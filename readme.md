@@ -40,6 +40,7 @@ Watch our local demo video to see the AI Report Generator in action. This demo s
 - **Report Generation:** The process of generating, previewing, and downloading a report.
 
 Click the video below to view it:
+
 [![Watch the demo](https://img.youtube.com/vi/HFsXR69v3nE/0.jpg)](https://www.youtube.com/watch?v=HFsXR69v3nE)
 
 ### Additional Demo Assets
