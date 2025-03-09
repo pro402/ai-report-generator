@@ -70,27 +70,21 @@ This project is ideal for content creators, researchers, and anyone looking to a
 
 - **workflow.py:**  
   Orchestrates the research and report generation processes using a state graph to define transitions and interactions.  
-  citeturn0file0
 
 - **tools.py:**  
   Contains custom tool functions for executing general, finance, and news searches via the Tavily API.  
-  citeturn0file1
 
 - **report_generator.py:**  
   Implements AI-driven content generation, from creating detailed outlines to final report assembly, using ChatNVIDIA and LangChain.  
-  citeturn0file4
 
 - **models.py:**  
   Defines the data models (using TypedDicts) for managing Report and Research states throughout the workflow.  
-  citeturn0file5
 
 - **streamlit_app.py:**  
   Provides a sleek Streamlit interface for users to input parameters, trigger the report generation workflow, and download the final content.  
-  citeturn0file2
 
 - **requirements.txt:**  
   Lists all necessary dependencies to run the project.  
-  citeturn0file3
 
 - **.gitignore & .env_example:**  
   Standard configuration files to manage environment variables and ignore unnecessary files in version control.
