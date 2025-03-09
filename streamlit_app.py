@@ -27,8 +27,8 @@ def main():
             # Run the workflow to generate the report
             response = graph.invoke(state, debug=True)
             report_content_raw = response["final_report"]
-            st.markdown("# Structure")
-            st.markdown(response["report_structure"])
+            # st.markdown("# Structure")
+            # st.markdown(response["report_structure"])
             # Extract the report enclosed within <report> and </report>
             pattern = re.compile(r'<report>(.*?)</report>', re.DOTALL)
             matches = pattern.findall(report_content_raw)
