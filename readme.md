@@ -49,8 +49,8 @@ Click the video below to view it:
   _This diagram illustrates the state transitions from initial research through final report generation._
 
 - **Sample Generated Reports:**  
-  - [View Sample Report (Markdown)](demos/report(2).md)
-  - [View Sample Report (Markdown)](demos/responsibleAI.md)
+  - [View Sample Report 1 (Markdown)](demos/report(2).md)
+  - [View Sample Report 2 (Markdown)](demos/responsibleAI.md)
 
 ## Features
 
