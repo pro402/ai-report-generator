@@ -6,7 +6,7 @@ Below is a more elaborate and refined README.md file inspired by high-quality Gi
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Streamlit](https://img.shields.io/badge/Streamlit-App-blue.svg)](https://streamlit.io/)
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/your-username/ai-report-generator)
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/pro402/ai-report-generator)
 
 AI Report Generator is a robust tool that leverages state-of-the-art language models and AI-driven search functionalities to dynamically create detailed reports, newsletters, or blogs. The project harnesses a state graph workflow, integrating research, content generation, and interactive user interfaces to deliver high-quality, structured content.
 
