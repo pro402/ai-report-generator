@@ -28,7 +28,6 @@ Think very deeply as an expert content writer to structure and enhance the conte
     chain = prompt | llm_with_tools | StrOutputParser()
     response = chain.invoke({"contents": contents})
     cleaned_response = re.sub(r"<think>.*?</think>\n?", "", response, flags=re.DOTALL)
-    # Defensive: fail if blank
     if not cleaned_response.strip():
         raise ValueError("report_str_llm: LLM returned empty outline/structure!")
     state["report_structure"] = cleaned_response
@@ -77,6 +76,7 @@ Please use the following parameters:
 Generate content that adheres to these guidelines.
 Ensure that each section is at least 200 words for the introduction and conclusion, at least 500 words for other sections, and that each subsection has at least 200 words.
 Include reference URL links in markdown format.
+**The report MUST include at least one Markdown table summarizing facts, statistics, or events. If missing, please add a sample table.**
 Provide the entire content in markdown format enclosed between <report> and </report>.
 Provide a desirable title for the content.
 The content should be structured in pandoc markdown format to convert the markdown to a pdf
@@ -85,7 +85,13 @@ The content should be structured in pandoc markdown format to convert the markdo
     chain = prompt | llm_with_tools | StrOutputParser()
     response = chain.invoke({"contents": contents})
     cleaned_response = re.sub(r"<think>.*?</think>\n?", "", response, flags=re.DOTALL)
-    # Defensive: fail if blank
+
+    # Ensure <report> tags are present and properly closed
+    if "<report>" not in cleaned_response:
+        cleaned_response = "<report>\n" + cleaned_response
+    if not cleaned_response.strip().endswith("</report>"):
+        cleaned_response = cleaned_response.rstrip() + "\n</report>"
+
     if not cleaned_response.strip():
         raise ValueError("report_content: LLM returned empty report!")
     state["final_report"] = cleaned_response
