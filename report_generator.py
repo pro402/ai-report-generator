@@ -43,11 +43,12 @@ def report_str_llm(state: Report):
     response = chain.invoke({"contents": contents})
     cleaned_response = re.sub(r"<think>.*?</think>\n?", "", response, flags=re.DOTALL)
     state["report_structure"] = cleaned_response
-    state["messages"] = prompt.format_prompt(**{
-        "topic": state["topic"],
-        "report_type": state["report_type"],
-        "outline": state["outline"],
-    }).to_messages()
+    # state["messages"] = prompt.format_prompt(**{
+    #     "topic": state["topic"],
+    #     "report_type": state["report_type"],
+    #     "outline": state["outline"],
+    # }).to_messages()
+    state["messages"] = prompt.format_prompt(contents=contents).to_messages()
     return state
 
 def researcher(state: Research):
