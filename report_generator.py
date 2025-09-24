@@ -28,26 +28,19 @@ client = ChatGoogleGenerativeAI(
 llm_with_tools = client.bind_tools(tools=tools)
 
 def report_str_llm(state: Report):
-    messages = [
-      (
-          "system",
-          """You are an expert in designing detailed structures and outlines for content. Your task is to generate a well-organized and comprehensive content outline.
-  Each section of the outline should include a brief description, key points, and references (except intro and conclusion sections).
-  Please use the following parameters:
-  - **Topic**: {topic}
-  - **Content Type**: {report_type}
-  - **Overall Outline**: {outline}
-  Generate a structured content outline that adheres to these guidelines.
-  Make sure to only provide a structure for the content.
-  Think very deeply as an expert content writer to structure and enhance the content's appeal.
-  """)]
-    prompt = ChatPromptTemplate(messages)
-    chain = prompt | llm_with_tools | StrOutputParser()
-    response = chain.invoke({
-        "topic": state["topic"],
-        "report_type": state["report_type"],
-        "outline": state["outline"],
-    })
+    contents = f"""You are an expert in designing detailed structures and outlines for content. Your task is to generate a well-organized and comprehensive content outline.
+Each section of the outline should include a brief description, key points, and references (except intro and conclusion sections).
+Please use the following parameters:
+- Topic: {state['topic']}
+- Content Type: {state['report_type']}
+- Overall Outline: {state['outline']}
+Generate a structured content outline that adheres to these guidelines.
+Make sure to only provide a structure for the content.
+Think very deeply as an expert content writer to structure and enhance the content's appeal.
+"""
+prompt = ChatPromptTemplate.from_template("{contents}")
+chain = prompt | llm_with_tools | StrOutputParser()
+response = chain.invoke({"contents": contents})
     cleaned_response = re.sub(r"<think>.*?</think>\n?", "", response, flags=re.DOTALL)
     state["report_structure"] = cleaned_response
     state["messages"] = prompt.format_prompt(**{
