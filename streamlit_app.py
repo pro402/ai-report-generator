@@ -26,14 +26,22 @@ def main():
             }
             # Run the workflow to generate the report
             response = graph.invoke(state, debug=True)
-            report_content_raw = response["final_report"]
+            st.write("Graph output state:", response)  # <-- DEBUG: See all state fields
+
+            report_content_raw = response.get("final_report")
+            if not report_content_raw or not isinstance(report_content_raw, str) or len(report_content_raw.strip()) == 0:
+                st.warning("No report was generated. Please check your workflow or try again.")
+                return
+
             # Extract the report enclosed within <report> and </report>
             pattern = re.compile(r'<report>(.*?)</report>', re.DOTALL)
             matches = pattern.findall(report_content_raw)
-            report_md = ''.join(matches)
+            report_md = ''.join(matches) if matches else report_content_raw  # fallback to raw if no <report> block
+
             # Display the generated report in Markdown format
             st.markdown("# Report")
             st.markdown(report_md)
+
             # Provide a download button for the Markdown file
             st.download_button(
                 label="Download Report as Markdown",
