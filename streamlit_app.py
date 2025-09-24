@@ -5,8 +5,6 @@ from workflow import graph
 
 def main():
     st.title("AI Report Generator")
-
-    # User input fields
     st.write("Generate a detailed report based on your input parameters below.")
     topic = st.text_input("Topic", "Latest advancements and News on AI 2025")
     report_type = st.selectbox("Report Type", ["Report", "News Letter", "Blog"])
@@ -24,19 +22,23 @@ def main():
                 "deep_research": [],
                 "messages": []
             }
-            response = graph.invoke(state, debug=True)
-            st.write("Graph output state:", response)  # Debugging: See all state fields
+            try:
+                response = graph.invoke(state, debug=True)
+            except Exception as e:
+                st.error(f"Workflow error: {e}")
+                return
 
+            st.write("Graph output state:", response)
             report_content_raw = response.get("final_report")
             if not report_content_raw or not isinstance(report_content_raw, str) or len(report_content_raw.strip()) == 0:
                 st.warning("No report was generated. Please check your workflow or try again.")
                 return
 
-            # Extract the report enclosed within <report>...</report>
             pattern = re.compile(r'<report>(.*?)</report>', re.DOTALL)
             matches = pattern.findall(report_content_raw)
-            report_md = ''.join(matches) if matches else report_content_raw  # fallback to raw
-
+            report_md = ''.join(matches) if matches else report_content_raw
+            if not report_md.strip().endswith("</report>"):
+                report_md = report_md.rstrip() + "\n</report>"
             st.markdown("# Report")
             st.markdown(report_md)
             st.download_button(
