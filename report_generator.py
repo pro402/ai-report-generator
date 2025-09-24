@@ -1,23 +1,28 @@
 import re
 from langchain.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
-from langchain_nvidia_ai_endpoints import ChatNVIDIA
+from langchain_google_genai import ChatGoogleGenerativeAI
 from models import Report, Research
-import os
-from dotenv import load_dotenv
+# import os
+# from dotenv import load_dotenv
 from tools import general_and_finance_search, news_search
 
-load_dotenv()
+# load_dotenv()
 
-NVIDIA_API = os.getenv("NVIDIA_API")
+# NVIDIA_API = os.getenv("NVIDIA_API")
 
 tools = [general_and_finance_search, news_search]
 
-client = ChatNVIDIA(
-    model="deepseek-ai/deepseek-r1",
-    api_key=NVIDIA_API,
-    temperature=0,
-    max_tokens=4096,
+# client = ChatNVIDIA(
+#     model="deepseek-ai/deepseek-r1",
+#     api_key=NVIDIA_API,
+#     temperature=0,
+#     max_tokens=4096,
+# )
+google_api_key = st.secrets["GOOGLE_API_KEY"]
+client = ChatGoogleGenerativeAI(
+    model="gemini-2.5-flash",
+    google_api_key=google_api_key
 )
 llm_with_tools = client.bind_tools(tools=tools)
 
