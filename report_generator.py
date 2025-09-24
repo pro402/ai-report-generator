@@ -61,12 +61,8 @@ def researcher(state: Research):
         <tool: news_search | query: \"your search query here\">
     Include references with URL links in markdown format.
     """
-    prompt = ChatPromptTemplate(messages)
+    prompt = ChatPromptTemplate.from_template("{contents}")
     chain = prompt | llm_with_tools | StrOutputParser()
-    # response = chain.invoke({
-    #     "topic": state["topic"],
-    #     "outline": state["outline"],
-    # })
     response = chain.invoke({"contents": contents})
     cleaned_response = re.sub(r"<think>.*?</think>\n?", "", response, flags=re.DOTALL)
 
