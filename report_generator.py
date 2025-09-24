@@ -70,10 +70,11 @@ Your output should be structured with a clear separation between the Queries and
     ]
     prompt = ChatPromptTemplate(messages)
     chain = prompt | llm_with_tools | StrOutputParser()
-    response = chain.invoke({
-        "topic": state["topic"],
-        "outline": state["outline"],
-    })
+    # response = chain.invoke({
+    #     "topic": state["topic"],
+    #     "outline": state["outline"],
+    # })
+    response = chain.invoke({"contents": contents})
     cleaned_response = re.sub(r"<think>.*?</think>\n?", "", response, flags=re.DOTALL)
 
     # Parse the output: assume the model returns text with "Queries:" and "Deep Research:" sections.
