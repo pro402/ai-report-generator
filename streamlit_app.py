@@ -14,7 +14,6 @@ def main():
 
     if st.button("Generate Report"):
         with st.spinner("Generating report..."):
-            # Create the initial state for the workflow
             state: Report = {
                 "topic": topic,
                 "report_type": report_type,
@@ -22,27 +21,24 @@ def main():
                 "report_structure": None,
                 "final_report": None,
                 "queries": [],
-                "deep_research": []
+                "deep_research": [],
+                "messages": []
             }
-            # Run the workflow to generate the report
             response = graph.invoke(state, debug=True)
-            st.write("Graph output state:", response)  # <-- DEBUG: See all state fields
+            st.write("Graph output state:", response)  # Debugging: See all state fields
 
             report_content_raw = response.get("final_report")
             if not report_content_raw or not isinstance(report_content_raw, str) or len(report_content_raw.strip()) == 0:
                 st.warning("No report was generated. Please check your workflow or try again.")
                 return
 
-            # Extract the report enclosed within <report> and </report>
+            # Extract the report enclosed within <report>...</report>
             pattern = re.compile(r'<report>(.*?)</report>', re.DOTALL)
             matches = pattern.findall(report_content_raw)
-            report_md = ''.join(matches) if matches else report_content_raw  # fallback to raw if no <report> block
+            report_md = ''.join(matches) if matches else report_content_raw  # fallback to raw
 
-            # Display the generated report in Markdown format
             st.markdown("# Report")
             st.markdown(report_md)
-
-            # Provide a download button for the Markdown file
             st.download_button(
                 label="Download Report as Markdown",
                 data=report_md,
