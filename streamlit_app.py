@@ -5,8 +5,17 @@ from workflow import graph
 
 def main():
     st.title("AI Report Generator")
-    st.write("Generate a detailed report based on your input parameters below.")
+    user_api_key = st.text_input("Enter your Tavily API Key", type="password")  # API key field
 
+    # Collect other user parameters...
+    if st.button("Generate Report"):
+        if not user_api_key:
+            st.warning("Please provide your API key to continue.")
+            st.stop()
+        
+        # Pass the api_key to your tool function
+        result = general_and_finance_search(query="...", api_key=user_api_key)
+    st.write("Generate a detailed report based on your input parameters below.")
     # User input fields
     topic = st.text_input("Topic", "Latest advancements and News on AI 2025")
     report_type = st.selectbox("Report Type", ["Report", "News Letter", "Blog"])
