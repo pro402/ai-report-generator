@@ -80,6 +80,7 @@ Include reference URL links in markdown format.
 Provide the entire content in markdown format enclosed between <report> and </report>.
 Provide a desirable title for the content.
 The content should be structured in pandoc markdown format to convert the markdown to a pdf
+Make sure to always provide the report. Hence You must always fill the report body with real Markdown content; never leave it empty.
 """
     prompt = ChatPromptTemplate.from_template("{contents}")
     chain = prompt | llm_with_tools | StrOutputParser()
