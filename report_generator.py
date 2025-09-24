@@ -20,10 +20,10 @@ tools = [general_and_finance_search, news_search]
 #     temperature=0,
 #     max_tokens=4096,
 # )
-google_api_key = st.secrets["GOOGLE_API_KEY"]
+
 client = ChatGoogleGenerativeAI(
     model="gemini-2.5-flash",
-    google_api_key=google_api_key
+    google_api_key=st.secrets["GOOGLE_API_KEY"]
 )
 llm_with_tools = client.bind_tools(tools=tools)
 
