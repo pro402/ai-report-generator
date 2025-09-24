@@ -14,7 +14,7 @@ research_graph.add_edge(START, "researcher")
 research_graph.add_conditional_edges(
     "researcher",
     tools_condition,
-    {"tool": "research_tools", "default": END}
+    {"__end__": END, "tool": "research_tools"}
 )
 research_graph.add_edge("research_tools", "researcher")
 graphh = research_graph.compile()
@@ -29,10 +29,10 @@ workflow.add_edge(START, "generate_report_structure")
 workflow.add_conditional_edges(
     "generate_report_structure",
     tools_condition,
-    {"tool": "structure_tools", "default": "researcher"}
+    {"__end__": "researcher", "tool":"structure_tools"}
 )
 workflow.add_edge("structure_tools", "generate_report_structure")
-workflow.add_edge("researcher", "report_content_generator")
+workflow.add_edge("researcher","report_content_generator")
 workflow.add_edge("report_content_generator", END)
 
 graph = workflow.compile()
