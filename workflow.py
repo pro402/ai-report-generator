@@ -6,7 +6,7 @@ from tools import general_and_finance_search, news_search
 
 tools = [general_and_finance_search, news_search]
 
-# Define and compile the research state graph
+# --- Research Graph ---
 research_graph = StateGraph(Research)
 research_graph.add_node("researcher", researcher)
 research_graph.add_node("research_tools", ToolNode(tools))
@@ -19,6 +19,7 @@ research_graph.add_conditional_edges(
 research_graph.add_edge("research_tools", "researcher")
 graphh = research_graph.compile()
 
+# --- Main Workflow ---
 workflow = StateGraph(Report)
 workflow.add_node("generate_report_structure", report_str_llm)
 workflow.add_node("structure_tools", ToolNode(tools))
