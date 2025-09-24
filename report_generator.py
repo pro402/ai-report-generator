@@ -3,6 +3,7 @@ from langchain.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_google_genai import ChatGoogleGenerativeAI
 from models import Report, Research
+import streamlit as st
 # import os
 # from dotenv import load_dotenv
 from tools import general_and_finance_search, news_search
