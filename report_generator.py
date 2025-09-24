@@ -4,22 +4,9 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_google_genai import ChatGoogleGenerativeAI
 from models import Report, Research
 import streamlit as st
-# import os
-# from dotenv import load_dotenv
 from tools import general_and_finance_search, news_search
 
-# load_dotenv()
-
-# NVIDIA_API = os.getenv("NVIDIA_API")
-
 tools = [general_and_finance_search, news_search]
-
-# client = ChatNVIDIA(
-#     model="deepseek-ai/deepseek-r1",
-#     api_key=NVIDIA_API,
-#     temperature=0,
-#     max_tokens=4096,
-# )
 
 client = ChatGoogleGenerativeAI(
     model="gemini-2.5-flash",
@@ -43,11 +30,6 @@ def report_str_llm(state: Report):
     response = chain.invoke({"contents": contents})
     cleaned_response = re.sub(r"<think>.*?</think>\n?", "", response, flags=re.DOTALL)
     state["report_structure"] = cleaned_response
-    # state["messages"] = prompt.format_prompt(**{
-    #     "topic": state["topic"],
-    #     "report_type": state["report_type"],
-    #     "outline": state["outline"],
-    # }).to_messages()
     state["messages"] = prompt.format_prompt(contents=contents).to_messages()
     return state
 
@@ -67,14 +49,6 @@ def researcher(state: Research):
     cleaned_response = re.sub(r"<think>.*?</think>\n?", "", response, flags=re.DOTALL)
 
     # Parse the output: assume the model returns text with "Queries:" and "Deep Research:" sections.
-    # Example expected output:
-    #   Queries:
-    #   1. query one
-    #   2. query two
-    #
-    #   Deep Research:
-    #   Detailed findings for query one...
-    #   Detailed findings for query two...
     parts = cleaned_response.split("Deep Research:")
     if len(parts) == 2:
         queries_section = parts[0].split("Queries:")[-1].strip()
@@ -91,23 +65,17 @@ def researcher(state: Research):
 
     state["queries"].extend(queries_list)
     state["deep_research"].append(research_section)
-    state["messages"] = prompt.format_prompt(**{
-        "topic": state["topic"],
-        "outline": state["outline"],
-    }).to_messages()
+    state["messages"] = prompt.format_prompt(contents=contents).to_messages()
     return state
 
 def report_content(state: Report):
-    messages = [
-        (
-            "system",
-            """You are an expert content writer. Your task is to generate and curate a well-organized, comprehensive content piece.
+    contents = f"""You are an expert content writer. Your task is to generate and curate a well-organized, comprehensive content piece.
 Each section of the outline should be detailed and easy to understand, following the provided structure.
 Please use the following parameters:
-- **Topic**: {topic}
-- **Content Type**: {report_type}
-- **Overall Outline**: {outline}
-- **Report Structure**: {report_structure}
+- **Topic**: {state['topic']}
+- **Content Type**: {state['report_type']}
+- **Overall Outline**: {state['outline']}
+- **Report Structure**: {state['report_structure']}
 Generate content that adheres to these guidelines.
 Ensure that each section is at least 200 words for the introduction and conclusion, at least 500 words for other sections, and that each subsection has at least 200 words.
 Include reference URL links in markdown format.
@@ -115,22 +83,10 @@ Provide the entire content in markdown format enclosed between <report> and </re
 Provide a desirable title for the content.
 The content should be structured in pandoc markdown format to convert the markdown to a pdf
 """
-        ),
-    ]
-    prompt = ChatPromptTemplate(messages)
+    prompt = ChatPromptTemplate.from_template("{contents}")
     chain = prompt | llm_with_tools | StrOutputParser()
-    response = chain.invoke({
-        "topic": state["topic"],
-        "report_type": state["report_type"],
-        "outline": state["outline"],
-        "report_structure": state["report_structure"]
-    })
+    response = chain.invoke({"contents": contents})
     cleaned_response = re.sub(r"<think>.*?</think>\n?", "", response, flags=re.DOTALL)
     state["final_report"] = cleaned_response
-    state["messages"] = prompt.format_prompt(**{
-        "topic": state["topic"],
-        "report_type": state["report_type"],
-        "outline": state["outline"],
-        "report_structure": state["report_structure"]
-    }).to_messages()
+    state["messages"] = prompt.format_prompt(contents=contents).to_messages()
     return state
