@@ -28,7 +28,8 @@ def main():
                 st.error(f"Workflow error: {e}")
                 return
 
-            st.write("Graph output state:", response)
+            with st.expander("Show workflow/graph output state"):
+                st.write(response)
             report_content_raw = response.get("final_report")
             if not report_content_raw or not isinstance(report_content_raw, str) or len(report_content_raw.strip()) == 0:
                 st.warning("No report was generated. Please check your workflow or try again.")
