@@ -1,12 +1,7 @@
 from langchain_core.tools import tool
 from typing_extensions import Literal
 from tavily import TavilyClient
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
-TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
+import streamlit as st
 
 @tool
 def general_and_finance_search(
@@ -16,7 +11,7 @@ def general_and_finance_search(
     max_results: int = 5,
     time_range: Literal["none", "day", "week", "month", "year"] = "none",
     include_answer: Literal["advanced", "basic", "none"] = "advanced",
-):
+):    
     """
     This function will return the general and finance search results for the given query.
     Args:
@@ -29,6 +24,8 @@ def general_and_finance_search(
     Returns:
         response: dict
     """
+
+    TAVILY_API_KEY = st.secrets["TAVILY_API_KEY"]
     client = TavilyClient(TAVILY_API_KEY)
     response = client.search(
         query=query,
@@ -41,7 +38,6 @@ def general_and_finance_search(
         include_image_descriptions=True,
         include_raw_content=True,
     )
-    # print(response)
     return response
 
 @tool
@@ -65,6 +61,7 @@ def news_search(
     Returns:
         response: dict
     """
+    TAVILY_API_KEY = st.secrets["TAVILY_API_KEY"]
     client = TavilyClient(TAVILY_API_KEY)
     response = client.search(
         query=query,
@@ -78,13 +75,4 @@ def news_search(
         include_raw_content=True,
         days=days
     )
-    # print(response)
     return response
-
-# @tool
-# def human_feedback(
-#     feedback: str
-# ):
-#     """
-#     This is a tool that takes feedback from the user on the generated content.
-#     """
