@@ -52,22 +52,15 @@ def report_str_llm(state: Report):
     return state
 
 def researcher(state: Research):
-    messages = [
-        (
-            "system",
-            """You are an expert researcher tasked with performing deep and extensive research on the given topic.
-Your output should have two parts:
-1. **Queries**: Generate a list of search queries (each on a separate line or numbered) that are relevant to the topic and overall outline.
-2. **Deep Research**: For each generated query, provide detailed research findings including recent advancements, news articles, academic sources, and relevant data. If you need to fetch up‑to‑date information, include a tool command in the following format:
-    <tool: news_search | query: "your search query here">
-Include references with URL links in markdown format.
-Here are the input values:
-  - **Topic**: {topic}
-  - **Overall Outline**: {outline}
-Your output should be structured with a clear separation between the Queries and the Deep Research sections.
-"""
-        ),
-    ]
+    contents = f"""You are an expert researcher tasked with performing deep and extensive research on the given topic.
+    - Topic: {state['topic']}
+    - Overall Outline: {state['outline']}
+    Your output should have two parts:
+    1. Queries: Generate a list of search queries (each on a separate line or numbered) that are relevant to the topic and overall outline.
+    2. Deep Research: For each generated query, provide detailed research findings including recent advancements, news articles, academic sources, and relevant data. If you need to fetch up‑to‑date information, include a tool command in the following format:
+        <tool: news_search | query: \"your search query here\">
+    Include references with URL links in markdown format.
+    """
     prompt = ChatPromptTemplate(messages)
     chain = prompt | llm_with_tools | StrOutputParser()
     # response = chain.invoke({
